@@ -55,3 +55,21 @@ order by Rented_films desc;
 
 select * from category;
 select * from payment;
+
+select cat.name, concat('$', format(sum(pay.amount),2)) as gross_revenues from category cat
+join film_category fcat on cat.category_id = fcat.category_id
+join film f on fcat.film_id = f.film_id
+join inventory i on f.film_id = i.film_id
+join rental r on i.inventory_id = r.inventory_id
+join payment pay on r.rental_id = pay.rental_id
+group by cat.name
+order by gross_revenues desc
+limit 5;
+
+-- 7 
+
+select * from inventory;
+
+select f.title, i.store_id from film f
+join inventory i on f.film_id = i.film_id
+where f.title = "Academy Dinosaur" and i.store_id = 1;
